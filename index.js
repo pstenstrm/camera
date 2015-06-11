@@ -87,10 +87,14 @@
 			img = new Image(),
 			that = this;
 
-		video.src = src;
+		video.addEventListener('loadeddata', function() {
+			video.play();
 
-		localMediaStream = that.files;
-		initialize();
+			localMediaStream = that.files;
+			initialize.call(this);
+		});
+
+		video.src = src;
 	});
 	
 })(this, this.document);
