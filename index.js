@@ -32,9 +32,39 @@
 	}
 
 	function requestAnimationFrame() {
+		var 
+			color;
+
 		snapshot();
 
+		color = getCanvasColor();
+
+		doc.body.style.background = 'rgb(' + color.r + ',' + color.g + ',' + color.b + ')';
+
 		win.requestAnimationFrame(requestAnimationFrame);
+	}
+
+	function getCanvasColor () {
+		var 
+			blockSize = 5,
+			data = ctx.getImageData(0, 0, width, height),
+			color = {r: 0, g: 0, b: 0},
+			len = data.data.length,
+			count = 0,
+			i;
+
+		for(i = 0; i < len; i += blockSize * 4) {
+			count++;
+			color.r += data.data[i];
+			color.g += data.data[i + 1];
+			color.b += data.data[i + 2];
+		}
+
+		color.r = ~~(color.r / count);
+		color.g = ~~(color.g / count);
+		color.b = ~~(color.b / count);
+
+		return color;
 	}
 
 
@@ -45,6 +75,5 @@
 	}, function(err) {
 		if(err) throw err;
 	});
-
 
 })(this, this.document);
