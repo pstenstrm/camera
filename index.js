@@ -4,6 +4,7 @@
 	var 
 		canvas = doc.getElementById('canvas'),
 		video = doc.getElementById('video'),
+		file = doc.getElementById('file'),
 		ctx = canvas.getContext('2d'),
 		localMediaStream = null,
 		width,
@@ -68,12 +69,34 @@
 	}
 
 
-	win.navigator.getUserMedia({video: true}, function(stream) {
+	/*win.navigator.getUserMedia({video: true}, function(stream) {
 		video.src = win.URL.createObjectURL(stream);
 
 		localMediaStream = stream;
 	}, function(err) {
 		if(err) throw err;
-	});
+	});*/
 
+	file.addEventListener('change', function() {
+		if(!this.files.length) return;
+
+		var 
+			src = win.URL.createObjectURL(this.files[0]),
+			img = new Image();
+
+		img.onload = function() {
+			width = img.width;
+			height = img.height;
+
+			canvas.setAttribute('width', width);
+			canvas.setAttribute('height', height);
+
+			ctx.drawImage(img, 0, 0, width, height);
+
+			requestAnimationFrame();
+		}
+
+		img.src = src;
+	});
+	
 })(this, this.document);
