@@ -84,29 +84,13 @@
 
 		var 
 			src = win.URL.createObjectURL(this.files[0]),
-			img = new Image();
+			img = new Image(),
+			that = this;
 
-		img.onload = function() {
-			width = img.width;
-			height = img.height;
+		video.src = src;
 
-			if(width > height && width > 400) {
-				height = 400 * (height / width);
-				width = 400;
-			} else if (height > width) {
-				width = 400 * (width / height);
-				height = 400;
-			}
-
-			canvas.setAttribute('width', width);
-			canvas.setAttribute('height', height);
-
-			ctx.drawImage(img, 0, 0, width, height);
-
-			requestAnimationFrame();
-		};
-
-		img.src = src;
+		localMediaStream = that.files;
+		initialize();
 	});
 	
 })(this, this.document);
