@@ -14,12 +14,12 @@
 	</style>
 	<script type="text/javascript">
 		window.addEventListener('error', function(err) {
-			document.body.appendChild(document.createTextNode(err.message));
+			document.body.appendChild(document.createTextNode(err.lineno + ': ' + err.message));
 		});
 	</script>
 </head>
 <body>
-	<video id="video" autoplay></video>
+	<video id="video" width="640" height="480" autoplay></video>
 	<canvas id="canvas"></canvas>
 
 	<script src="index.js"></script>
