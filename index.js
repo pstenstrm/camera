@@ -80,7 +80,7 @@
 	file.addEventListener('change', function() {
 		if(!this.files.length) return;
 
-		file.parentNode.remove(file);
+		//file.parentNode.remove(file);
 
 		var 
 			src = win.URL.createObjectURL(this.files[0]),
