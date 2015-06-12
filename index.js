@@ -29,7 +29,7 @@
 	function drawImg(src) {
 		var img = new Image();
 
-		log(src);
+		logln(src);
 
 		setTimeout(function() {
 			width = img.width;
@@ -130,7 +130,12 @@
 	};
 
 	function log(str) {
-		document.body.appendChild(document.createTextNode(str + '\n'));
+		doc.body.appendChild(doc.createTextNode(str));
+	}
+
+	function logln(str) {
+		log(str);
+		doc.body.appendChild(doc.createElement('br'));
 	}
 
 })(this, this.document);
