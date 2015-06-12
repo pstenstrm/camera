@@ -12,14 +12,24 @@
 	navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
 	function snapshot() {
-		if(localMediaStream) {
+		var 
+			snapshot = document.getElementsByTagName("img");
+
+		if(snapshot) {
+			snapshot = snapshot[0].cloneNode(true);
+
+			log(snapshot.width);
+
+			ctx.drawImage(snapshot, 0, 0, width, height);
+
+		} else if(localMediaStream) {
 			ctx.drawImage(video, 0, 0, width, height);
 		}
 	}
 	
 	function initialize() {
-		width = this.videoWidth;
-		height = this.videoHeight;
+		width = video.width;
+		height = video.height;
 
 		video.removeEventListener('playing', initialize);
 
