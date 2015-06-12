@@ -80,15 +80,24 @@
 		video = doc.getElementById('video');
 		ctx = canvas.getContext('2d');
 
-		video.addEventListener('playing', initialize);
+		//video.addEventListener('playing', initialize);
 
 		navigator.getUserMedia({video: true}, function(stream) {
 			video.src = win.URL.createObjectURL(stream);
 
 			localMediaStream = stream;
+
+			setTimeout(function() {
+				initialize();
+			}, 1000);
+
 		}, function(err) {
 			if(err) throw err;
 		});
 	};
+
+	function log(str) {
+		document.body.appendChild(document.createTextNode(str + '\n'));
+	}
 
 })(this, this.document);
