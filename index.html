@@ -7,11 +7,16 @@
 			margin: 0;
 		}
 
-		canvas,
-		video {
+		video,
+		canvas {
 			display: none;
 		}
 	</style>
+	<script type="text/javascript">
+		window.addEventListener('error', function(err) {
+			document.body.appendChild(document.createTextNode(err.message));
+		});
+	</script>
 </head>
 <body>
 	<video id="video" autoplay></video>

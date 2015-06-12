@@ -2,9 +2,9 @@
 	"use strict";
 	
 	var 
-		canvas = doc.getElementById('canvas'),
-		video = doc.getElementById('video'),
-		ctx = canvas.getContext('2d'),
+		canvas,
+		video,
+		ctx,
 		localMediaStream = null,
 		width,
 		height;
@@ -16,8 +16,6 @@
 			ctx.drawImage(video, 0, 0, width, height);
 		}
 	}
-
-	video.addEventListener('playing', initialize);
 	
 	function initialize() {
 		width = this.videoWidth;
@@ -66,14 +64,21 @@
 
 		return color;
 	}
+	
+	window.onload = function() {
+		canvas = doc.getElementById('canvas');
+		video = doc.getElementById('video');
+		ctx = canvas.getContext('2d');
 
+		video.addEventListener('playing', initialize);
 
-	win.navigator.getUserMedia({video: true}, function(stream) {
-		video.src = win.URL.createObjectURL(stream);
+		navigator.getUserMedia({video: true}, function(stream) {
+			video.src = win.URL.createObjectURL(stream);
 
-		localMediaStream = stream;
-	}, function(err) {
-		if(err) throw err;
-	});
+			localMediaStream = stream;
+		}, function(err) {
+			if(err) throw err;
+		});
+	};
 
 })(this, this.document);
