@@ -26,7 +26,7 @@
 		}
 	}
 
-	function drawImg(src, proceed) {
+	function drawImg(src) {
 		var img = new Image();
 
 		log(src);
@@ -48,13 +48,7 @@
 
 			ctx.drawImage(img, 0, 0, width, height);
 
-			log(canvas.toDataURL());
-
-			drawImage(canvas.toDataURL(), true);
-
-			if(proceed) {
-				calcColor();
-			}
+			calcColor();
 		}, 300);
 
 		img.src = src;
