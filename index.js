@@ -13,18 +13,51 @@
 
 	function snapshot() {
 		var 
-			snapshot = document.getElementsByTagName("img");
+			snapshot = document.getElementsByTagName("img")[0];
 
 		if(snapshot) {
-			snapshot = snapshot[0].cloneNode(true);
 
-			log(snapshot.width);
-
-			ctx.drawImage(snapshot, 0, 0, width, height);
+			drawImg(snapshot.src);
+			return true;
 
 		} else if(localMediaStream) {
 			ctx.drawImage(video, 0, 0, width, height);
+			return false;
 		}
+	}
+
+	function drawImg(src, proceed) {
+		var img = new Image();
+
+		log(src);
+
+		setTimeout(function() {
+			width = img.width;
+			height = img.height;
+
+			if(width > height && width > 400) {
+				height = 400 * (height / width);
+				width = 400;
+			} else if (height > width) {
+				width = 400 * (width / height);
+				height = 400;
+			}
+
+			canvas.setAttribute('width', width);
+			canvas.setAttribute('height', height);
+
+			ctx.drawImage(img, 0, 0, width, height);
+
+			log(canvas.toDataURL());
+
+			drawImage(canvas.toDataURL(), true);
+
+			if(proceed) {
+				calcColor();
+			}
+		}, 300);
+
+		img.src = src;
 	}
 	
 	function initialize() {
@@ -40,10 +73,16 @@
 	}
 
 	function requestAnimationFrame() {
+		var bowser = snapshot();
+
+		if(!bowser) {
+			calcColor();
+		}
+	}
+
+	function calcColor() {
 		var 
 			color;
-
-		snapshot();
 
 		color = getCanvasColor();
 
